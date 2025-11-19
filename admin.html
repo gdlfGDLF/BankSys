@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理员 - 银行客户关系管理系统</title>
+    <link rel="stylesheet" href="css\admin\admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- 顶部导航 -->
+        <header class="admin-header">
+            <div class="header-left">
+                <h1><i class="fas fa-university"></i> 银行客户关系管理系统</h1>
+                <span class="user-role">管理员控制台</span>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <i class="fas fa-user-shield"></i>
+                    <span id="current-admin">管理员</span>
+                </div>
+                <button id="logout-btn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> 退出系统
+                </button>
+            </div>
+        </header>
+
+        <div class="admin-main">
+            <!-- 左侧菜单 -->
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <div class="nav-section">
+                        <h3>系统管理</h3>
+                        <ul>
+                            <li class="nav-item active" data-tab="user-management">
+                                <i class="fas fa-users"></i>
+                                <span>用户管理</span>
+                            </li>
+                            <li class="nav-item" data-tab="role-management">
+                                <i class="fas fa-user-tag"></i>
+                                <span>角色权限</span>
+                            </li>
+                            <li class="nav-item" data-tab="system-settings">
+                                <i class="fas fa-cog"></i>
+                                <span>系统设置</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="nav-section">
+                        <h3>数据监控</h3>
+                        <ul>
+                            <li class="nav-item" data-tab="system-logs">
+                                <i class="fas fa-clipboard-list"></i>
+                                <span>系统日志</span>
+                            </li>
+                            <li class="nav-item" data-tab="data-backup">
+                                <i class="fas fa-database"></i>
+                                <span>数据备份</span>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </aside>
+
+            <!-- 主内容区 -->
+            <main class="content-area">
+                <!-- 用户管理 -->
+                <section id="user-management" class="content-section active">
+                    <div class="section-header">
+                        <h2><i class="fas fa-users"></i> 用户管理</h2>
+                        <button id="add-user-btn" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> 添加用户
+                        </button>
+                    </div>
+                    
+                    <div class="search-bar">
+                        <div class="search-group">
+                            <input type="text" id="user-search" placeholder="搜索用户名、姓名或邮箱...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <select id="role-filter">
+                            <option value="">所有角色</option>
+                            <option value="admin">管理员</option>
+                            <option value="sales_manager">销售经理</option>
+                            <option value="customer_manager">客户经理</option>
+                        </select>
+                        <button id="search-btn" class="btn btn-secondary">搜索</button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>用户ID</th>
+                                    <th>用户名</th>
+                                    <th>姓名</th>
+                                    <th>角色</th>
+                                    <th>邮箱</th>
+                                    <th>状态</th>
+                                    <th>创建时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="user-table-body">
+                                <!-- 用户数据将通过JavaScript动态加载 -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button class="page-btn" id="prev-page">上一页</button>
+                        <span class="page-info" id="page-info">第 1 页，共 1 页</span>
+                        <button class="page-btn" id="next-page">下一页</button>
+                    </div>
+                </section>
+
+                <!-- 角色权限管理 -->
+                <section id="role-management" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-user-tag"></i> 角色权限管理</h2>
+                        <button id="add-role-btn" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> 添加角色
+                        </button>
+                    </div>
+                    
+                    <div class="roles-grid">
+                        <div class="role-card">
+                            <div class="role-header">
+                                <h3>管理员</h3>
+                                <span class="role-badge admin">系统管理</span>
+                            </div>
+                            <div class="role-description">
+                                拥有系统所有权限，包括用户管理、权限分配和系统设置
+                            </div>
+                            <div class="role-stats">
+                                <span>用户数: 3</span>
+                                <span>权限数: 28</span>
+                            </div>
+                            <div class="role-actions">
+                                <button class="btn btn-sm btn-outline">编辑权限</button>
+                                <button class="btn btn-sm btn-outline">查看用户</button>
+                            </div>
+                        </div>
+                        
+                        <div class="role-card">
+                            <div class="role-header">
+                                <h3>销售经理</h3>
+                                <span class="role-badge manager">团队管理</span>
+                            </div>
+                            <div class="role-description">
+                                管理销售团队，查看团队业绩，分配客户机会
+                            </div>
+                            <div class="role-stats">
+                                <span>用户数: 12</span>
+                                <span>权限数: 18</span>
+                            </div>
+                            <div class="role-actions">
+                                <button class="btn btn-sm btn-outline">编辑权限</button>
+                                <button class="btn btn-sm btn-outline">查看用户</button>
+                            </div>
+                        </div>
+                        
+                        <div class="role-card">
+                            <div class="role-header">
+                                <h3>客户经理</h3>
+                                <span class="role-badge user">业务操作</span>
+                            </div>
+                            <div class="role-description">
+                                管理客户信息，开发客户机会，执行营销计划
+                            </div>
+                            <div class="role-stats">
+                                <span>用户数: 45</span>
+                                <span>权限数: 15</span>
+                            </div>
+                            <div class="role-actions">
+                                <button class="btn btn-sm btn-outline">编辑权限</button>
+                                <button class="btn btn-sm btn-outline">查看用户</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 系统设置 -->
+                <section id="system-settings" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-cog"></i> 系统设置</h2>
+                    </div>
+                    
+                    <div class="settings-grid">
+                        <div class="setting-card">
+                            <div class="setting-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>安全设置</h3>
+                            <p>配置密码策略、登录安全等</p>
+                            <button class="btn btn-outline">配置</button>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <div class="setting-icon">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <h3>通知设置</h3>
+                            <p>管理系统通知和提醒</p>
+                            <button class="btn btn-outline">配置</button>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <div class="setting-icon">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <h3>界面设置</h3>
+                            <p>自定义系统外观和主题</p>
+                            <button class="btn btn-outline">配置</button>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <div class="setting-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h3>数据管理</h3>
+                            <p>数据备份、清理和恢复</p>
+                            <button class="btn btn-outline">管理</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 系统日志 -->
+                <section id="system-logs" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-clipboard-list"></i> 系统日志</h2>
+                    </div>
+                    <div class="logs-container">
+                        <div class="log-entry">
+                            <div class="log-time">2024-01-15 14:30:25</div>
+                            <div class="log-user">管理员</div>
+                            <div class="log-action">创建了新用户: 张三</div>
+                            <div class="log-level info">信息</div>
+                        </div>
+                        <div class="log-entry">
+                            <div class="log-time">2024-01-15 13:22:10</div>
+                            <div class="log-user">系统</div>
+                            <div class="log-action">自动备份完成</div>
+                            <div class="log-level success">成功</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 数据备份 -->
+                <section id="data-backup" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-database"></i> 数据备份</h2>
+                    </div>
+                    <div class="backup-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-download"></i> 立即备份
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-history"></i> 恢复数据
+                        </button>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- 添加用户模态框 -->
+    <div id="add-user-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加新用户</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="add-user-form">
+                    <div class="form-group">
+                        <label for="new-username">用户名</label>
+                        <input type="text" id="new-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-displayname">姓名</label>
+                        <input type="text" id="new-displayname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-email">邮箱</label>
+                        <input type="email" id="new-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-role">角色</label>
+                        <select id="new-role" required>
+                            <option value="">请选择角色</option>
+                            <option value="admin">管理员</option>
+                            <option value="sales_manager">销售经理</option>
+                            <option value="customer_manager">客户经理</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-password">初始密码</label>
+                        <input type="password" id="new-password" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close-modal">取消</button>
+                <button type="button" class="btn btn-primary" id="confirm-add-user">添加用户</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin/admin.js"></script>
+</body>
+</html>

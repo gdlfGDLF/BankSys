@@ -1,0 +1,62 @@
+<!-- test-connection.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>连接测试</title>
+</head>
+<body>
+    <h1>服务器连接测试</h1>
+    <button onclick="testHTTP()">测试HTTP代理</button>
+    <button onclick="testTCP()">测试C++服务器</button>
+    <button onclick="testLogin()">测试登录</button>
+    <div id="result"></div>
+
+    <script>
+        async function testHTTP() {
+            try {
+                const response = await fetch('http://localhost:3000/health');
+                const data = await response.json();
+                document.getElementById('result').innerHTML = 
+                    '<h3>HTTP代理状态:</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('result').innerHTML = 
+                    '<h3>HTTP代理错误:</h3><pre>' + error + '</pre>';
+            }
+        }
+
+        async function testTCP() {
+            try {
+                const response = await fetch('http://localhost:3000/test-tcp');
+                const data = await response.json();
+                document.getElementById('result').innerHTML = 
+                    '<h3>C++服务器状态:</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('result').innerHTML = 
+                    '<h3>C++服务器错误:</h3><pre>' + error + '</pre>';
+            }
+        }
+
+        async function testLogin() {
+            try {
+                const response = await fetch('http://localhost:3000/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'admin', password: 'admin123' })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const text = await response.text();
+                document.getElementById('result').innerHTML = 
+                    '<h3>登录响应:</h3><pre>状态: ' + response.status + '\n内容: ' + text + '</pre>';
+                    
+            } catch (error) {
+                document.getElementById('result').innerHTML = 
+                    '<h3>登录错误:</h3><pre>' + error + '</pre>';
+            }
+        }
+    </script>
+</body>
+</html>
