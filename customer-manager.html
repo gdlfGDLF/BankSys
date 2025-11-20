@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客户经理 - 银行CRM系统</title>
+    <link rel="stylesheet" href="css/customer-manager.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="customer-container">
+        <!-- 顶部导航 -->
+        <header class="customer-header">
+            <div class="header-left">
+                <h1><i class="fas fa-handshake"></i> 银行客户关系管理系统</h1>
+                <span class="user-role">客户经理工作台</span>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <i class="fas fa-user-check"></i>
+                    <span id="current-customer-manager">客户经理</span>
+                </div>
+                <button id="logout-btn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> 退出登录
+                </button>
+            </div>
+        </header>
+
+        <div class="customer-main">
+            <!-- 左侧菜单 -->
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <div class="nav-section">
+                        <h3>客户管理</h3>
+                        <ul>
+                            <li class="nav-item active" data-tab="my-customers">
+                                <i class="fas fa-address-book"></i>
+                                <span>我的客户</span>
+                            </li>
+                            <li class="nav-item" data-tab="customer-followup">
+                                <i class="fas fa-tasks"></i>
+                                <span>客户跟进</span>
+                            </li>
+                            <li class="nav-item" data-tab="new-customers">
+                                <i class="fas fa-user-plus"></i>
+                                <span>新增客户</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="nav-section">
+                        <h3>营销机会</h3>
+                        <ul>
+                            <li class="nav-item" data-tab="opportunity-list">
+                                <i class="fas fa-bullseye"></i>
+                                <span>机会列表</span>
+                            </li>
+                            <li class="nav-item" data-tab="development-plan">
+                                <i class="fas fa-chart-line"></i>
+                                <span>开发计划</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <h3>业务办理</h3>
+                        <ul>
+                            <li class="nav-item" data-tab="product-recommendation">
+                                <i class="fas fa-gift"></i>
+                                <span>产品推荐</span>
+                            </li>
+                            <li class="nav-item" data-tab="service-records">
+                                <i class="fas fa-clipboard-list"></i>
+                                <span>服务记录</span>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </aside>
+
+            <!-- 主内容区 -->
+            <main class="content-area">
+                <!-- 我的客户 -->
+                <section id="my-customers" class="content-section active">
+                    <div class="section-header">
+                        <h2><i class="fas fa-address-book"></i> 我的客户</h2>
+                        <div class="header-actions">
+                            <button class="btn btn-outline">
+                                <i class="fas fa-download"></i> 导出
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-plus"></i> 添加客户
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="customer-stats">
+                        <div class="customer-stat-card">
+                            <div class="stat-icon primary">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>24</h3>
+                                <p>总客户数</p>
+                            </div>
+                        </div>
+                        <div class="customer-stat-card">
+                            <div class="stat-icon success">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>8</h3>
+                                <p>VIP客户</p>
+                            </div>
+                        </div>
+                        <div class="customer-stat-card">
+                            <div class="stat-icon warning">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>5</h3>
+                                <p>待跟进</p>
+                            </div>
+                        </div>
+                        <div class="customer-stat-card">
+                            <div class="stat-icon info">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>¥890,000</h3>
+                                <p>本月业绩</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="customer-list">
+                        <div class="customer-card vip">
+                            <div class="customer-header">
+                                <div class="customer-avatar">
+                                    <i class="fas fa-crown"></i>
+                                </div>
+                                <div class="customer-info">
+                                    <h4>王明 - 科技有限公司</h4>
+                                    <p><i class="fas fa-phone"></i> 138****5678</p>
+                                    <span class="customer-tag vip-tag">VIP客户</span>
+                                </div>
+                            </div>
+                            <div class="customer-details">
+                                <div class="detail-item">
+                                    <span class="label">最近联系</span>
+                                    <span class="value">2024-01-15</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">产品持有</span>
+                                    <span class="value">理财、贷款</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">客户等级</span>
+                                    <span class="value">钻石</span>
+                                </div>
+                            </div>
+                            <div class="customer-actions">
+                                <button class="btn btn-sm btn-outline">联系</button>
+                                <button class="btn btn-sm btn-outline">跟进</button>
+                                <button class="btn btn-sm btn-primary">详情</button>
+                            </div>
+                        </div>
+
+                        <div class="customer-card regular">
+                            <div class="customer-header">
+                                <div class="customer-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="customer-info">
+                                    <h4>李华 - 贸易公司</h4>
+                                    <p><i class="fas fa-phone"></i> 139****1234</p>
+                                    <span class="customer-tag regular-tag">普通客户</span>
+                                </div>
+                            </div>
+                            <div class="customer-details">
+                                <div class="detail-item">
+                                    <span class="label">最近联系</span>
+                                    <span class="value">2024-01-10</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">产品持有</span>
+                                    <span class="value">储蓄、保险</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">客户等级</span>
+                                    <span class="value">黄金</span>
+                                </div>
+                            </div>
+                            <div class="customer-actions">
+                                <button class="btn btn-sm btn-outline">联系</button>
+                                <button class="btn btn-sm btn-outline">跟进</button>
+                                <button class="btn btn-sm btn-primary">详情</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 客户跟进 -->
+                <section id="customer-followup" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-tasks"></i> 客户跟进</h2>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i> 新建跟进
+                        </button>
+                    </div>
+                    
+                    <div class="followup-timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-header">
+                                    <h4>电话回访 - 王明</h4>
+                                    <span class="timeline-date">今天 14:30</span>
+                                </div>
+                                <p>客户对新产品表示兴趣，约定下周面谈详细方案</p>
+                                <span class="timeline-status completed">已完成</span>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-header">
+                                    <h4>产品推荐 - 李华</h4>
+                                    <span class="timeline-date">明天 10:00</span>
+                                </div>
+                                <p>计划向客户推荐企业理财套餐</p>
+                                <span class="timeline-status pending">待进行</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 营销机会 -->
+                <section id="opportunity-list" class="content-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-bullseye"></i> 营销机会</h2>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i> 新建机会
+                        </button>
+                    </div>
+                    
+                    <div class="opportunity-cards">
+                        <div class="opportunity-card">
+                            <div class="opportunity-progress">
+                                <div class="progress-bar" style="width: 70%"></div>
+                            </div>
+                            <h4>企业贷款业务</h4>
+                            <p>XX制造有限公司 - 贷款金额 ¥2,000,000</p>
+                            <div class="opportunity-meta">
+                                <span><i class="fas fa-percentage"></i> 70% 成功率</span>
+                                <span><i class="fas fa-calendar"></i> 预计成交: 2024-02-01</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 其他标签页内容... -->
+            </main>
+        </div>
+    </div>
+
+    <script src="customer-manager.js"></script>
+</body>
+</html>
