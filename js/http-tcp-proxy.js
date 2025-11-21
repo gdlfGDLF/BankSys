@@ -162,7 +162,7 @@ function forwardToTCP(action, data, headers, res) {
     
     console.log('转发请求到TCP服务器:', action);
     
-    // 修改这一行：将 'localhost' 改为 '127.0.0.1'
+
     tcpClient.connect(8080, '127.0.0.1', () => {
         tcpClient.write(JSON.stringify(requestData));
     });

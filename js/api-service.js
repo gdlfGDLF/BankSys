@@ -28,14 +28,14 @@ class ApiService {
     }
 
     // ========== 用户认证接口 ==========
-    async login(username, password) {
+    async login(username, password,LoginTime) {
         try {
             console.log('发送登录请求:', { username, password });
             
             const response = await fetch(`${this.baseURL}/api/login`, {
                 method: 'POST',
                 headers: this.getHeaders(),
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({ username, password,LoginTime})
             });
             
             const result = await response.json();

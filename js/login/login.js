@@ -31,10 +31,15 @@ async function handleLogin(e) {
     
     try {
         // 调用后端API进行登录
-        const result = await window.apiService.login(username, password);
+        const loginTime = new Date().toISOString();
+        const result = await window.apiService.login(username, password,loginTime);
         
         if (result.success) {
-            loginSuccess(result.user, result.token);
+            const userInfo = {
+                username: username,  // 使用前端输入的用户名
+                role: result.role    // 使用后端返回的角色
+            };
+            loginSuccess(userInfo, result.token);
         } else {
             showMessage(result.error || '登录失败', 'error');
         }
@@ -63,11 +68,8 @@ function loginSuccess(userInfo, token) {
 // 保存用户信息到localStorage - 修改为保存后端返回的数据
 function saveUserInfo(userInfo, token) {
     localStorage.setItem('currentUser', JSON.stringify({
-        id: userInfo.id,
-        username: userInfo.username,
-        display_name: userInfo.display_name,
+        username: username,
         role: userInfo.role,
-        email: userInfo.email,
         loginTime: new Date().toISOString()
     }));
     
@@ -120,7 +122,7 @@ function redirectToDashboard(userInfo) {
             window.location.href = 'customer-manager.html';
             break;
         default:
-            window.location.href = 'dashboard.html';
+            window.location.href = 'login.html';
             break;
     }
 }
