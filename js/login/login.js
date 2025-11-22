@@ -94,7 +94,6 @@ function showMessage(message, type) {
     }, 3000);
 }
 
-// ========== 预留接口函数 ==========
 
 // 登录成功后的回调（可被外部覆盖）
 function onLoginSuccess(userInfo) {
@@ -113,6 +112,7 @@ function redirectToDashboard(userInfo) {
     // 根据角色跳转到不同页面
     switch(userInfo.role) {
         case 'admin':
+            //window.apiService = null;
             window.location.href = 'admin.html';
             break;
         case 'sales_manager':

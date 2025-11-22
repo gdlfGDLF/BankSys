@@ -1,4 +1,8 @@
 // api-service.js - 前端调用后端的服务
+// 防止重复加载
+if (window.apiService) {
+    throw new Error('ApiService already loaded');
+}
 class ApiService {
     constructor() {
         this.baseURL = 'http://localhost:3000'; // HTTP代理服务器地址
@@ -174,5 +178,4 @@ class ApiService {
     }
 }
 
-// 创建全局实例
 window.apiService = new ApiService();

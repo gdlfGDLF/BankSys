@@ -106,86 +106,45 @@ class AdminSystem {
     }
 
     // 添加新用户
-    addNewUser() {
-        const form = document.getElementById('add-user-form');
-        const formData = new FormData(form);
-        
-        // 简单的表单验证
-        const username = document.getElementById('new-username').value.trim();
-        const displayName = document.getElementById('new-displayname').value.trim();
-        const email = document.getElementById('new-email').value.trim();
-        const role = document.getElementById('new-role').value;
-        const password = document.getElementById('new-password').value;
-
-        if (!username || !displayName || !email || !role || !password) {
-            alert('请填写所有必填字段！');
-            return;
+    async addNewUser() {
+        try {
+            const form = document.getElementById('add-user-form');
+            const formData = new FormData(form);
+            const userData = Object.fromEntries(formData);
+    
+            console.log('发送的用户数据:', userData); // 调试用
+    
+            const result = await window.apiService.addUser(userData);
+    
+            if (result.success) { 
+                // 显示成功消息
+                alert('用户添加成功！');
+                // 关闭模态框
+                this.hideModal('add-user-modal');
+                // 清空表单
+                form.reset();
+                // 刷新用户列表
+                this.loadUserData();
+            } else {
+                alert(`添加失败: ${result.message || '未知错误'}`);
+            }
+        } catch (error) {
+            console.error('添加用户时发生错误:', error);
+            alert('添加失败，请检查网络连接或联系管理员');
         }
-
-        // 模拟API调用 - 实际项目中这里应该是真实的API请求
-        console.log('添加新用户:', {
-            username,
-            displayName,
-            email,
-            role,
-            password: '***' // 实际中不应该记录明文密码
-        });
-
-        // 显示成功消息
-        alert('用户添加成功！');
-        
-        // 关闭模态框
-        this.hideModal('add-user-modal');
-        
-        // 刷新用户列表
-        this.loadUserData();
     }
 
     // 加载用户数据
     loadUserData() {
-        // 模拟用户数据 - 实际项目中这里应该是从API获取
-        const mockUsers = [
-            {
-                id: 1,
-                username: 'admin',
-                displayName: '系统管理员',
-                role: 'admin',
-                email: 'admin@bank.com',
-                status: 'active',
-                createTime: '2024-01-01 10:00:00'
-            },
-            {
-                id: 2,
-                username: 'zhangsan',
-                displayName: '张三',
-                role: 'sales_manager',
-                email: 'zhangsan@bank.com',
-                status: 'active',
-                createTime: '2024-01-10 14:30:00'
-            },
-            {
-                id: 3,
-                username: 'lisi',
-                displayName: '李四',
-                role: 'customer_manager',
-                email: 'lisi@bank.com',
-                status: 'inactive',
-                createTime: '2024-01-12 09:15:00'
-            },
-            {
-                id: 4,
-                username: 'wangwu',
-                displayName: '王五',
-                role: 'customer_manager',
-                email: 'wangwu@bank.com',
-                status: 'active',
-                createTime: '2024-01-15 16:45:00'
-            }
-        ];
-
-        this.renderUserTable(mockUsers);
+        // 这里应该从服务器获取用户列表
+        window.apiService.getUsers().then(users => {
+            this.renderUserTable(users);
+        }).catch(error => {
+            console.error('加载用户数据失败:', error);
+            // 可以显示错误信息或使用空数组
+            this.renderUserTable([]);
+        });
     }
-
     // 渲染用户表格
     renderUserTable(users) {
         const tbody = document.getElementById('user-table-body');
