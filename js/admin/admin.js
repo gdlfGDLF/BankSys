@@ -135,15 +135,22 @@ class AdminSystem {
     }
 
     // 加载用户数据
-    loadUserData() {
-        // 这里应该从服务器获取用户列表
-        window.apiService.getUsers().then(users => {
-            this.renderUserTable(users);
-        }).catch(error => {
+    async loadUserData() {
+        try {
+            const result = await window.apiService.getUsers();
+            console.log('完整响应:', result);
+            console.log('users 字段:', result.users);
+            console.log('users 类型:', typeof result.users);
+            console.log('是否是数组:', Array.isArray(result.users));
+            
+            if (result.success && Array.isArray(result.users)) {
+                this.renderUserTable(result.users);
+            } else {
+                console.error('users 不是数组或为空');
+            }
+        } catch (error) {
             console.error('加载用户数据失败:', error);
-            // 可以显示错误信息或使用空数组
-            this.renderUserTable([]);
-        });
+        }
     }
     // 渲染用户表格
     renderUserTable(users) {

@@ -3,222 +3,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>销售经理 - 银行CRM系统</title>
     <link rel="stylesheet" href="css/sales-manger/sales-manger.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>营销机会与客户开发管理系统</title>
+    
 </head>
 <body>
-    <div class="manager-container">
-        <!-- 顶部导航 -->
-        <header class="manager-header">
-            <div class="header-left">
-                <h1><i class="fas fa-chart-line"></i> 银行客户关系管理系统</h1>
-                <span class="user-role">销售经理工作台</span>
+    <header>
+        <div class="header-content">
+            <h1>营销机会与客户开发管理系统</h1>
+            <div class="user-info">
+                <span id="currentUser">管理员</span>
+                <button id="logoutBtn" class="btn btn-secondary">退出登录</button>
             </div>
-            <div class="header-right">
-                <div class="user-info">
-                    <i class="fas fa-user-tie"></i>
-                    <span id="current-manager">销售经理</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- 侧边导航 -->
+        <nav class="sidebar">
+            <ul>
+                <li><a href="#" class="nav-link active" data-page="marketing">营销机会管理</a></li>
+                <li><a href="#" class="nav-link" data-page="development">客户开发计划</a></li>
+            </ul>
+        </nav>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 营销机会管理页面 -->
+            <div id="marketingPage" class="content-page active">
+                <div class="page-header">
+                    <h2>营销机会管理</h2>
+                    <button id="addOpportunityBtn" class="btn btn-primary">添加营销机会</button>
                 </div>
-                <button id="logout-btn" class="logout-btn">
-                    <i class="fas fa-sign-out-alt"></i> 退出登录
-                </button>
+
+                <div class="card">
+                    <div class="card-header">营销机会列表</div>
+                    <div class="card-body">
+                        <div class="search-box">
+                            <input type="text" id="searchOpportunityInput" placeholder="搜索客户名称、负责人、机会来源...">
+                            <button id="searchOpportunityBtn" class="btn btn-primary">搜索</button>
+                        </div>
+                        
+                        <div class="table-container">
+                            <table id="opportunityTable">
+                                <thead>
+                                    <tr>
+                                        <th>系统ID</th>
+                                        <th>客户名称</th>
+                                        <th>机会来源</th>
+                                        <th>联系电话</th>
+                                        <th>负责人</th>
+                                        <th>成功几率</th>
+                                        <th>客户等级</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="opportunityTableBody">
+                                    <tr>
+                                        <td>1</td>
+                                        <td>北京科技有限公司</td>
+                                        <td>客户推荐</td>
+                                        <td>13800138000</td>
+                                        <td>张经理</td>
+                                        <td>70%</td>
+                                        <td>A类客户</td>
+                                        <td class="actions">
+                                            <button class="btn btn-primary btn-sm edit-opportunity-btn">编辑</button>
+                                            <button class="btn btn-danger btn-sm delete-opportunity-btn">删除</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>上海贸易有限公司</td>
+                                        <td>市场活动</td>
+                                        <td>13900139000</td>
+                                        <td>李总监</td>
+                                        <td>50%</td>
+                                        <td>B类客户</td>
+                                        <td class="actions">
+                                            <button class="btn btn-primary btn-sm edit-opportunity-btn">编辑</button>
+                                            <button class="btn btn-danger btn-sm delete-opportunity-btn">删除</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>广州制造集团</td>
+                                        <td>合作伙伴</td>
+                                        <td>13700137000</td>
+                                        <td>王主管</td>
+                                        <td>80%</td>
+                                        <td>A类客户</td>
+                                        <td class="actions">
+                                            <button class="btn btn-primary btn-sm edit-opportunity-btn">编辑</button>
+                                            <button class="btn btn-danger btn-sm delete-opportunity-btn">删除</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </header>
 
-        <div class="manager-main">
-            <!-- 左侧菜单 -->
-            <aside class="sidebar">
-                <nav class="sidebar-nav">
-                    <div class="nav-section">
-                        <h3>销售管理</h3>
-                        <ul>
-                            <li class="nav-item active" data-tab="team-management">
-                                <i class="fas fa-users"></i>
-                                <span>团队管理</span>
-                            </li>
-                            <li class="nav-item" data-tab="opportunity-management">
-                                <i class="fas fa-bullseye"></i>
-                                <span>机会管理</span>
-                            </li>
-                            <li class="nav-item" data-tab="performance-analysis">
-                                <i class="fas fa-chart-bar"></i>
-                                <span>业绩分析</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="nav-section">
-                        <h3>客户管理</h3>
-                        <ul>
-                            <li class="nav-item" data-tab="customer-overview">
-                                <i class="fas fa-address-book"></i>
-                                <span>客户总览</span>
-                            </li>
-                            <li class="nav-item" data-tab="customer-distribution">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>客户分布</span>
-                            </li>
-                        </ul>
-                    </div>
+            <!-- 客户开发计划页面 -->
+            <div id="developmentPage" class="content-page">
+                <div class="page-header">
+                    <h2>客户开发计划</h2>
+                    <button id="addDevelopmentBtn" class="btn btn-primary">添加开发计划</button>
+                </div>
 
-                    <div class="nav-section">
-                        <h3>报表中心</h3>
-                        <ul>
-                            <li class="nav-item" data-tab="sales-reports">
-                                <i class="fas fa-file-alt"></i>
-                                <span>销售报表</span>
-                            </li>
-                            <li class="nav-item" data-tab="team-reports">
-                                <i class="fas fa-chart-pie"></i>
-                                <span>团队报表</span>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </aside>
-
-            <!-- 主内容区 -->
-            <main class="content-area">
-                <!-- 团队管理 -->
-                <section id="team-management" class="content-section active">
-                    <div class="section-header">
-                        <h2><i class="fas fa-users"></i> 团队管理</h2>
-                        <button class="btn btn-primary">
-                            <i class="fas fa-plus"></i> 分配任务
-                        </button>
-                    </div>
-                    <div class="team-management-layout">
-                        <!-- 第一行：统计卡片 -->
-                        <div class="stat-card">
-                            <div class="stat-icon team">
-                                <i class="fas fa-user-friends"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3>12</h3>
-                                <p>团队成员</p>
-                            </div>
+                <div class="card">
+                    <div class="card-header">客户开发计划列表</div>
+                    <div class="card-body">
+                        <div class="search-box">
+                            <input type="text" id="searchDevelopmentInput" placeholder="搜索客户名称、概要内容、联系人...">
+                            <button id="searchDevelopmentBtn" class="btn btn-primary">搜索</button>
                         </div>
                         
-                        <div class="stat-card">
-                            <div class="stat-icon success">
-                                <i class="fas fa-target"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3>45</h3>
-                                <p>本月成单</p>
-                            </div>
-                        </div>
-                        
-                        <!-- 第二行：团队成员网格（跨两列） -->
-                        <div class="team-grid">
-                            <div class="team-member-card">
-                                <div class="member-avatar">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <div class="member-info">
-                                    <h4>张三</h4>
-                                    <p>高级客户经理</p>
-                                    <span class="member-status active">活跃</span>
-                                </div>
-                                <div class="member-stats">
-                                    <div class="stat">
-                                        <span class="label">本月业绩</span>
-                                        <span class="value">¥280,000</span>
-                                    </div>
-                                    <div class="stat">
-                                        <span class="label">客户数</span>
-                                        <span class="value">24</span>
-                                    </div>
-                                </div>
-                            </div>
-                
-                            <div class="team-member-card">
-                                <div class="member-avatar">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <div class="member-info">
-                                    <h4>李四</h4>
-                                    <p>客户经理</p>
-                                    <span class="member-status active">活跃</span>
-                                </div>
-                                <div class="member-stats">
-                                    <div class="stat">
-                                        <span class="label">本月业绩</span>
-                                        <span class="value">¥190,000</span>
-                                    </div>
-                                    <div class="stat">
-                                        <span class="label">客户数</span>
-                                        <span class="value">18</span>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="table-container">
+                            <table id="developmentTable">
+                                <thead>
+                                    <tr>
+                                        <th>计划ID</th>
+                                        <th>客户名称</th>
+                                        <th>概要内容</th>
+                                        <th>联系人</th>
+                                        <th>开发状态</th>
+                                        <th>成功几率</th>
+                                        <th>归档状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="developmentTableBody">
+                                    <tr>
+                                        <td>1</td>
+                                        <td>北京科技有限公司</td>
+                                        <td>企业信息化系统升级</td>
+                                        <td>王先生</td>
+                                        <td><span class="status-badge status-warning">进行中</span></td>
+                                        <td>70%</td>
+                                        <td><span class="status-badge status-info">未归档</span></td>
+                                        <td class="actions">
+                                            <button class="btn btn-primary btn-sm edit-development-btn">编辑</button>
+                                            <button class="btn btn-danger btn-sm delete-development-btn">删除</button>
+                                            <button class="btn btn-warning btn-sm archive-development-btn">归档</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>广州制造集团</td>
+                                        <td>生产管理系统</td>
+                                        <td>刘总监</td>
+                                        <td><span class="status-badge status-info">未开始</span></td>
+                                        <td>80%</td>
+                                        <td><span class="status-badge status-info">未归档</span></td>
+                                        <td class="actions">
+                                            <button class="btn btn-primary btn-sm edit-development-btn">编辑</button>
+                                            <button class="btn btn-danger btn-sm delete-development-btn">删除</button>
+                                            <button class="btn btn-warning btn-sm archive-development-btn">归档</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>深圳创新企业</td>
+                                        <td>移动办公解决方案</td>
+                                        <td>陈经理</td>
+                                        <td><span class="status-badge status-success">开发成功</span></td>
+                                        <td>100%</td>
+                                        <td><span class="status-badge status-info">已归档</span></td>
+                                        <td class="actions">
+                                            <button class="btn btn-primary btn-sm edit-development-btn">编辑</button>
+                                            <button class="btn btn-danger btn-sm delete-development-btn">删除</button>
+                                            <button class="btn btn-warning btn-sm archive-development-btn">取消归档</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </section>
+                </div>
+            </div>
+        </main>
+    </div>
 
-                <!-- 机会管理 -->
-                <section id="opportunity-management" class="content-section">
-                    <div class="section-header">
-                        <h2><i class="fas fa-bullseye"></i> 机会管理</h2>
-                        <button class="btn btn-primary">
-                            <i class="fas fa-plus"></i> 新建机会
-                        </button>
+    <!-- 营销机会模态框 -->
+    <div class="modal" id="opportunityModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="opportunityModalTitle">添加营销机会</h3>
+                <button class="close" id="closeOpportunityModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="opportunityForm">
+                    <!-- 添加隐藏的 Qdyh_ID 字段 -->
+                    <input type="hidden" id="Qdyh_ID" name="Qdyh_ID">
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="Qdyh_Name">客户名称 *</label>
+                                <input type="text" class="form-control" id="Qdyh_Name" name="Qdyh_Name" required>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="Qdyh_Jhly">机会来源</label>
+                                <input type="text" class="form-control" id="Qdyh_Jhly" name="Qdyh_Jhly">
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="opportunity-list">
-                        <div class="opportunity-card high">
-                            <div class="opportunity-header">
-                                <h3>XX科技有限公司</h3>
-                                <span class="priority-badge">高优先级</span>
-                            </div>
-                            <div class="opportunity-details">
-                                <p><i class="fas fa-user"></i> 负责人: 张三</p>
-                                <p><i class="fas fa-money-bill-wave"></i> 预估金额: ¥500,000</p>
-                                <p><i class="fas fa-percentage"></i> 成功几率: 80%</p>
-                            </div>
-                            <div class="opportunity-actions">
-                                <button class="btn btn-sm btn-outline">分配</button>
-                                <button class="btn btn-sm btn-outline">跟进</button>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="Qdyh_Tel">联系电话</label>
+                                <input type="text" class="form-control" id="Qdyh_Tel" name="Qdyh_Tel">
                             </div>
                         </div>
-
-                        <div class="opportunity-card medium">
-                            <div class="opportunity-header">
-                                <h3>YY制造集团</h3>
-                                <span class="priority-badge">中优先级</span>
-                            </div>
-                            <div class="opportunity-details">
-                                <p><i class="fas fa-user"></i> 负责人: 李四</p>
-                                <p><i class="fas fa-money-bill-wave"></i> 预估金额: ¥300,000</p>
-                                <p><i class="fas fa-percentage"></i> 成功几率: 60%</p>
-                            </div>
-                            <div class="opportunity-actions">
-                                <button class="btn btn-sm btn-outline">分配</button>
-                                <button class="btn btn-sm btn-outline">跟进</button>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="Qdyh_Fzr">负责人</label>
+                                <input type="text" class="form-control" id="Qdyh_Fzr" name="Qdyh_Fzr">
                             </div>
                         </div>
                     </div>
-                </section>
-
-                <!-- 业绩分析 -->
-                <section id="performance-analysis" class="content-section">
-                    <div class="section-header">
-                        <h2><i class="fas fa-chart-bar"></i> 业绩分析</h2>
+                    
+                    <div class="form-group">
+                        <label for="Qdyh_Gy">概要</label>
+                        <input type="text" class="form-control" id="Qdyh_Gy" name="Qdyh_Gy">
                     </div>
-                    <div class="analysis-content">
-                        <div class="chart-placeholder">
-                            <i class="fas fa-chart-bar fa-3x"></i>
-                            <p>业绩趋势图表区域</p>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="Qdyh_Jl">成功几率</label>
+                                <select class="form-control" id="Qdyh_Jl" name="Qdyh_Jl">
+                                    <option value="">请选择</option>
+                                    <option value="10%">10%</option>
+                                    <option value="20%">20%</option>
+                                    <option value="30%">30%</option>
+                                    <option value="40%">40%</option>
+                                    <option value="50%">50%</option>
+                                    <option value="60%">60%</option>
+                                    <option value="70%">70%</option>
+                                    <option value="80%">80%</option>
+                                    <option value="90%">90%</option>
+                                    <option value="100%">100%</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="Qdyh_Khdj">客户等级</label>
+                                <select class="form-control" id="Qdyh_Khdj" name="Qdyh_Khdj">
+                                    <option value="">请选择</option>
+                                    <option value="A类客户">A类客户</option>
+                                    <option value="B类客户">B类客户</option>
+                                    <option value="C类客户">C类客户</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </section>
-
-                <!-- 其他标签页内容... -->
-            </main>
+                    
+                    <div class="form-group">
+                        <label for="Qdyh_Address">所在地区</label>
+                        <input type="text" class="form-control" id="Qdyh_Address" name="Qdyh_Address">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Qdyh_Jhms">机会描述</label>
+                        <textarea class="form-control" id="Qdyh_Jhms" name="Qdyh_Jhms" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Qdyh_Jhzp">机会指派</label>
+                        <input type="text" class="form-control" id="Qdyh_Jhzp" name="Qdyh_Jhzp">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="saveOpportunity">保存</button>
+                <button class="btn btn-secondary" id="cancelOpportunityBtn">取消</button>
+            </div>
         </div>
     </div>
 
-    <script src="sales-manager.js"></script>
+    <!-- 客户开发计划模态框 -->
+    <div class="modal" id="developmentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="developmentModalTitle">添加客户开发计划</h3>
+                <button class="close" id="closeDevelopmentModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="developmentForm">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="Dev_Name">客户名称 *</label>
+                                <input type="text" class="form-control" id="Dev_Name" required>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="Dev_Contact">联系人</label>
+                                <input type="text" class="form-control" id="Dev_Contact">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Dev_Summary">概要内容</label>
+                        <input type="text" class="form-control" id="Dev_Summary">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="Dev_Status">开发状态</label>
+                                <select class="form-control" id="Dev_Status">
+                                    <option value="未开始">未开始</option>
+                                    <option value="进行中">进行中</option>
+                                    <option value="开发成功">开发成功</option>
+                                    <option value="开发失败">开发失败</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="Dev_SuccessRate">成功几率</label>
+                                <select class="form-control" id="Dev_SuccessRate">
+                                    <option value="10%">10%</option>
+                                    <option value="20%">20%</option>
+                                    <option value="30%">30%</option>
+                                    <option value="40%">40%</option>
+                                    <option value="50%">50%</option>
+                                    <option value="60%">60%</option>
+                                    <option value="70%">70%</option>
+                                    <option value="80%">80%</option>
+                                    <option value="90%">90%</option>
+                                    <option value="100%">100%</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Dev_ArchiveStatus">归档状态</label>
+                        <select class="form-control" id="Dev_ArchiveStatus">
+                            <option value="未归档">未归档</option>
+                            <option value="已归档">已归档</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Dev_Plan">计划项描述</label>
+                        <textarea class="form-control" id="Dev_Plan" rows="3" placeholder="如：一定要成功开发此客户等"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Dev_Effect">执行效果</label>
+                        <textarea class="form-control" id="Dev_Effect" rows="3" placeholder="执行的效果如何等"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="saveDevelopment">保存</button>
+                <button class="btn btn-secondary" id="cancelDevelopmentBtn">取消</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/api-service.js"></script>
+    <script src="js/sales-manager/sales.js"></script>
 </body>
 </html>

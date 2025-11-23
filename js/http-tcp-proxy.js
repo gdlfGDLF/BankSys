@@ -1,6 +1,3 @@
-
-
-
 // http-proxy.js - 包含所有API路由
 const express = require('express');
 const net = require('net');
@@ -128,6 +125,11 @@ app.delete('/api/admin/users/:id', (req, res) => {
 app.patch('/api/admin/users/:id/status', (req, res) => {
     forwardToTCP('toggle_user_status', { id: req.params.id, ...req.body }, req.headers, res);
 });
+app.post('/api/sales/opportunity', (req, res) => {
+    console.log('收到添加机会请求:', req.body);
+    forwardToTCP('add_opportunity', req.body, req.headers, res);
+});
+
 
 // ========== 角色管理路由 ==========
 app.get('/api/admin/roles', (req, res) => {

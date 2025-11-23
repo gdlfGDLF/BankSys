@@ -106,7 +106,6 @@ class ApiService {
                 headers: this.getHeaders(),
                 body: JSON.stringify(userData)
             });
-            
             const result = await response.json();
             console.log('添加用户响应:', result);
             return result;
@@ -148,6 +147,45 @@ class ApiService {
         }
     }
 
+    async addOpportunity(data) {
+        try {
+            console.log('添加机会请求:', data);
+            
+            const response = await fetch(`${this.baseURL}/api/sales/opportunity`, {
+                method: 'POST',
+                headers: this.getHeaders(),
+                body: JSON.stringify(data)
+            });
+            
+            // 先获取响应文本
+            const responseText = await response.text();
+            console.log('原始响应:', responseText);
+            
+            // 检查是否是 HTML
+            if (responseText.trim().startsWith('<!DOCTYPE') || responseText.trim().startsWith('<html')) {
+                console.error('服务器返回了HTML页面而不是JSON');
+                return {
+                    success: false,
+                    message: '服务器返回了错误页面，请检查API路由'
+                };
+            }
+            
+            // 尝试解析为JSON
+            try {
+                const result = JSON.parse(responseText);
+                console.log('添加机会响应:', result);
+                return result;
+            } catch (parseError) {
+                console.error('JSON解析失败:', parseError);
+                return {
+                    success: false,
+                    message: '服务器返回了无效的JSON数据: ' + responseText.substring(0, 100)
+                };
+            }
+        } catch (error) {
+            return this.handleError(error);
+        }
+    }
     // ========== Token管理 ==========
     setToken(token) {
         this.token = token;
